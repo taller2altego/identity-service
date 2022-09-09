@@ -7,6 +7,6 @@ module.exports = app => {
     res.status(statusCode).send(otherFields);
   };
 
-  app.use('/signin', router);
-  router.post('/', login.signin, handlerResponse);
+  app.use('/signup', router);
+  router.post('/', login.signup, handlerResponse);
 };
