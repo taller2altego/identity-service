@@ -1,4 +1,4 @@
-class UserRepository {
+class SessionRepository {
   constructor() {
     this.users = [
       {
@@ -23,4 +23,4 @@ class UserRepository {
   }
 }
 
-module.exports = new UserRepository();
+module.exports = new SessionRepository();
