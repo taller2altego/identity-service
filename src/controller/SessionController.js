@@ -2,21 +2,30 @@ const sessionService = require('../service/SessionService');
 
 class SessionController {
   async login(req, res, next) {
-    const token = await sessionService.login();
-    res.customResponse = { statusCode: 200, token };
-    next();
+    return sessionService
+      .login(req.body)
+      .then(token => {
+        res.customResponse = { statusCode: 200, token };
+        next();
+      });
   }
 
   async logout(req, res, next) {
-    await sessionService.logout();
-    res.customResponse = { statusCode: 200, token };
-    next();
+    return sessionService
+      .logout(req.token)
+      .then(() => {
+        res.customResponse = { statusCode: 200 };
+        next();
+      });
   }
 
-  async isValid(req, res, next) {
-    await sessionService.tokenIsValid();
-    res.customResponse = { statusCode: 200, token };
-    next();
+  authentication(req, res, next) {
+    return sessionService
+      .tokenIsValid(req.params.token)
+      .then(token => {
+        res.customResponse = { statusCode: 200, token };
+        next();
+      });
   }
 }
 

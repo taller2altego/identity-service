@@ -14,8 +14,8 @@ class SessionRepository {
     ];
   }
 
-  getUsers() {
-    return this.users;
+  async setToken(token) {
+    return token;
   }
 
   async getUserByUsername(username) {
