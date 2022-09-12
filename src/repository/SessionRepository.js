@@ -1,16 +1,17 @@
-const redis = require('redis');
-const redisClient = redis.createClient();
+const redisClient = require('./../global').redisClient;
 
 class SessionRepository {
 
   async validate(username) {
-    return (redisClient.get(username) != null) ;
+    return redisClient.get(username) !== null;
   }
-  async set(username, token){
-    return (redisClient.set(username, token))
+
+  async set(username, token) {
+    return redisClient.set(username, token);
   }
-  async delete(token){
-    return (redisClient.del(token))
+
+  async delete(token) {
+    return redisClient.del(token);
   }
 }
 
