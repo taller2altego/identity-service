@@ -1,25 +1,16 @@
+const redis = require('redis');
+const redisClient = redis.createClient();
+
 class SessionRepository {
-  constructor() {
-    this.users = [
-      {
-        id: 1,
-        username: 'facu',
-        password: 'x'
-      },
-      {
-        id: 2,
-        username: 'luchito',
-        password: 'trolo'
-      }
-    ];
-  }
 
-  getUsers() {
-    return this.users;
+  async validate(username) {
+    return (redisClient.get(username) != null) ;
   }
-
-  async getUserByUsername(username) {
-    return this.users.filter(user => user.username === username)[0] || {};
+  async set(username, token){
+    return (redisClient.set(username, token))
+  }
+  async delete(token){
+    return (redisClient.del(token))
   }
 }
 
