@@ -1,27 +1,29 @@
-const UserRepository = require('../repository/SessionRepository');
+const SessionRepository = require('../repository/SessionRepository');
+const { secretKey } = require('config');
 
 const jwt = require('jsonwebtoken');
 
 class LoginService {
-  async login(username, password) {
-    // const username = '';
-
-    // creas un token con jwt
-    // guardas el token en redis como username-token
-
-    // devolves el token
-    // redisClient.set(req.body.name, req.body.value);
-    return 'signin';
+  login(body) {
+    const token = jwt.sign({ ...body }, secretKey);
+    return SessionRepository
+      .set(body.username, token)
+      .then(() => token);
   }
 
-  async logout(username, password) {
-    // eliminamos el token de redis
-    return 'signup';
+  async logout(body) {
+    return SessionRepository
+      .delete(body.username)
+      .then(() => {});
   }
 
-  async tokenIsValid() {
-    // const value = await redisClient.get(req.query.name);
-    return 'x';
+  async tokenIsValid(body) {
+    return Promise.all([jwt.verify(body.token, secretKey), SessionRepository.validate(body.username)])
+      .then(responses => {
+        const repositoryResponse = responses[1];
+        if (repositoryResponse === body.token) return body.token;
+        throw new Error();
+      });
   }
 }
 
