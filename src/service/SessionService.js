@@ -5,23 +5,23 @@ const jwt = require('jsonwebtoken');
 
 class LoginService {
   login(body) {
-    const token = jwt.sign({ ...body }, secretKey);
+    const token = jwt.sign({ ...body }, secretKey, { expiresIn: 3600 * 24 });
     return SessionRepository
       .set(body.username, token)
       .then(() => token);
   }
 
-  async logout(body) {
+  logout(token) {
     return SessionRepository
-      .delete(body.username)
-      .then(() => {});
+      .delete(token)
+      .then(() => { });
   }
 
-  async tokenIsValid(body) {
-    return Promise.all([jwt.verify(body.token, secretKey), SessionRepository.validate(body.username)])
+  async tokenIsValid(username, { token }) {
+    return Promise.all([jwt.verify(token, secretKey), SessionRepository.validate(username)])
       .then(responses => {
-        const repositoryResponse = responses[1];
-        if (repositoryResponse === body.token) return body.token;
+        const isValid = responses[1];
+        if (isValid) return token;
         throw new Error();
       });
   }

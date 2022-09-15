@@ -9,7 +9,9 @@ module.exports = app => {
 
   app.use('/login', router);
   router.post('/', session.login, handlerResponse);
-  router.get('/:token', session.authentication, handlerResponse);
+  
+  app.use('/token', router);
+  router.post('/:username', session.authentication, handlerResponse);
 
   app.use('/logout', router);
   router.post('/', session.logout, handlerResponse);

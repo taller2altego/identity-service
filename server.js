@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+var globaldata = require('./src/global');
 
 const redis = require('redis');
 const redisClient = redis.createClient({ url: 'redis://redis:6379' });
@@ -9,6 +10,10 @@ const redisClient = redis.createClient({ url: 'redis://redis:6379' });
   redisClient.on('error', (err) => {
     console.log('Error occured while connecting or accessing redis server');
   });
+
+  console.log('server');
+  console.log(redisClient);
+  globaldata.redisClient = redisClient;
 
   const app = express();
   app.use(

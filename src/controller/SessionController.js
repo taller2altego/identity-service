@@ -11,8 +11,11 @@ class SessionController {
   }
 
   async logout(req, res, next) {
+    const authorization = req.headers.authorization && req.headers.authorization.split(' ');
+    const token = authorization[0] === 'Bearer' ? authorization[1] : '';
+
     return sessionService
-      .logout(req.token)
+      .logout(token)
       .then(() => {
         res.customResponse = { statusCode: 200 };
         next();
@@ -20,10 +23,18 @@ class SessionController {
   }
 
   authentication(req, res, next) {
+    const authorization = req.headers.authorization && req.headers.authorization.split(' ');
+    const token = authorization[0] === 'Bearer' ? authorization[1] : '';
+
     return sessionService
-      .tokenIsValid(req.params.token)
+      .tokenIsValid(req.params.username, { token })
       .then(token => {
         res.customResponse = { statusCode: 200, token };
+        next();
+      })
+      .catch(err => {
+        console.log(err);
+        res.customResponse = { statusCode: 403, message: err.message };
         next();
       });
   }
