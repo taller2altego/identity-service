@@ -7,12 +7,8 @@ module.exports = app => {
     res.status(statusCode).send(otherFields);
   };
 
-  app.use('/login', router);
-  router.post('/', session.login, handlerResponse);
-  
-  app.use('/token', router);
-  router.post('/:username', session.authentication, handlerResponse);
-
-  app.use('/logout', router);
-  router.post('/', session.logout, handlerResponse);
+  app.use('/', router);
+  router.post('/login', session.login, handlerResponse);
+  router.post('/token', session.authentication, handlerResponse);
+  router.post('/logout', session.logout, handlerResponse);
 };

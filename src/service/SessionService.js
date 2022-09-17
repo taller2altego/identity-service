@@ -5,26 +5,37 @@ const jwt = require('jsonwebtoken');
 
 class LoginService {
   login(body) {
-    const token = jwt.sign({ ...body }, secretKey, { expiresIn: 3600 * 24 });
+    const token = jwt.sign({ ...body }, secretKey, { expiresIn: 3600 * 2 });
     return SessionRepository
       .set(body.username, token)
       .then(() => token);
   }
 
   logout(token) {
+    const { payload } = jwt.decode(token, { complete: true });
     return SessionRepository
-      .delete(token)
+      .delete(payload.username)
       .then(() => { });
   }
 
-  async tokenIsValid(username, { token }) {
-    return Promise.all([jwt.verify(token, secretKey), SessionRepository.validate(username)])
-      .then(responses => {
-        const isValid = responses[1];
-        if (isValid) return token;
-        throw new Error();
-      });
+  async tokenIsValid(token) {
+    const isValid = jwt.verify(token, secretKey);
+    if (isValid) {
+      const { payload } = jwt.decode(token, { complete: true });
+      return SessionRepository
+        .validate(payload.username)
+        .then(isValid => {
+          if (isValid) {
+            return token;
+          } else {
+            throw new Error('token is invalid');
+          }
+        });
+    } else {
+      throw new Error('token is invalid');
+    }
   }
 }
+
 
 module.exports = new LoginService();
