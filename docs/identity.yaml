@@ -70,7 +70,7 @@ definitions:
   login:
     type: object
     properties:
-      name:
+      email:
         type: string
       password:
         type: string

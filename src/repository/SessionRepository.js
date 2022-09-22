@@ -2,18 +2,18 @@ const redisClient = require('./../global').redisClient;
 
 class SessionRepository {
 
-  async validate(name) {
-    const x = await redisClient.get(name);
+  async validate(email) {
+    const x = await redisClient.get(email);
     console.log(x);
     return x !== null;
   }
 
-  async set(name, token) {
-    return redisClient.set(name, token);
+  async set(email, token) {
+    return redisClient.set(email, token);
   }
 
-  async delete(name) {
-    return redisClient.del(name);
+  async delete(email) {
+    return redisClient.del(email);
   }
 }
 
