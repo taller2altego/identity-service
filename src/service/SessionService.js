@@ -7,14 +7,14 @@ class LoginService {
   login(body) {
     const token = jwt.sign({ ...body }, secretKey, { expiresIn: 3600 * 2 });
     return SessionRepository
-      .set(body.name, token)
+      .set(body.email, token)
       .then(() => token);
   }
 
   logout(token) {
     const { payload } = jwt.decode(token, { complete: true });
     return SessionRepository
-      .delete(payload.name)
+      .delete(payload.email)
       .then(() => { });
   }
 
@@ -23,7 +23,7 @@ class LoginService {
     if (isValid) {
       const { payload } = jwt.decode(token, { complete: true });
       return SessionRepository
-        .validate(payload.name)
+        .validate(payload.email)
         .then(isValid => {
           if (isValid) {
             return token;
