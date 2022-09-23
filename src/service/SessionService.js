@@ -2,6 +2,7 @@ const SessionRepository = require('../repository/SessionRepository');
 const { secretKey } = require('config');
 
 const jwt = require('jsonwebtoken');
+const { sendMail } = require('../utils/nodeMailer');
 
 class LoginService {
   login(body) {
@@ -16,6 +17,10 @@ class LoginService {
     return SessionRepository
       .delete(payload.email)
       .then(() => { });
+  }
+
+  send_token(email) {
+    return sendMail(email);
   }
 
   async tokenIsValid(token) {
@@ -36,6 +41,5 @@ class LoginService {
     }
   }
 }
-
 
 module.exports = new LoginService();
