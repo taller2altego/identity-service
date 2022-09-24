@@ -21,7 +21,12 @@ class LoginService {
 
   send_token(body) {
     const token = jwt.sign({ ...body }, secretKey, { expiresIn: 300 });
-    return sendMail(body.email, token);
+    return SessionRepository
+      .set(body.email, token)
+      .then(() => {
+        sendMail(body.email, token);
+        return token;
+      });
   }
 
   async tokenIsValid(token) {
