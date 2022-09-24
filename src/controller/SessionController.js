@@ -48,7 +48,7 @@ class SessionController {
   }
 
   async send_token(req, res, next) {
-    return UserService.send_token(req.body.email)
+    return UserService.send_token(req.body)
       .then(() => {
         res.customResponse = { statusCode: 204 };
         next();

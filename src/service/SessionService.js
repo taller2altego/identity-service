@@ -19,8 +19,9 @@ class LoginService {
       .then(() => { });
   }
 
-  send_token(email) {
-    return sendMail(email);
+  send_token(body) {
+    const token = jwt.sign({ ...body }, secretKey, { expiresIn: 300 });
+    return sendMail(body.email, token);
   }
 
   async tokenIsValid(token) {

@@ -11,8 +11,8 @@ const transporter = nodemailer.createTransport({
     },
   });
 
-const sendMail = (dstEmail) => {
-    var mensaje = "luchito...";
+const sendMail = (dstEmail, token) => {
+    var mensaje = "Ingrese el siguiente Token en la App para recuperar su contraseña " + token;
     var mailOptions = {
         from: 'news.altego@gmail.com',
         to: dstEmail,
