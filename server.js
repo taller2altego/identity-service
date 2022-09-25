@@ -3,9 +3,8 @@ const cors = require("cors");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const redis = require('redis');
-const redisClient = redis.createClient({ url: 'redis://redis:6379' });
+const redisClient = redis.createClient({ url: process.env.REDIS_TLS_URL || 'redis://redis:6379' });
 var globaldata = require('./src/global');
-
 
 (async () => {
   await redisClient.connect();
@@ -13,8 +12,6 @@ var globaldata = require('./src/global');
     console.log('Error occured while connecting or accessing redis server');
   });
 
-  console.log('server');
-  console.log(redisClient);
   globaldata.redisClient = redisClient;
 
   const app = express();
@@ -23,6 +20,7 @@ var globaldata = require('./src/global');
       origin: "*",
     })
   );
+
 
   const swaggerDefinition = {
     openapi: "3.0.0",
@@ -49,7 +47,7 @@ var globaldata = require('./src/global');
 
   // set port, listen for requests
   const PORT = 5000;
-  app.listen(process.env.PORT || 5000, () => {
+  app.listen(process.env.PORT || PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
   });
 })();

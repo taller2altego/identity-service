@@ -9,6 +9,7 @@ module.exports = app => {
 
   app.use('/', router);
   router.post('/login', session.login, handlerResponse);
+  router.post('/login/send_token', session.send_token, handlerResponse);
   router.post('/token', session.authentication, handlerResponse);
   router.post('/logout', session.logout, handlerResponse);
 };

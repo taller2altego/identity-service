@@ -46,6 +46,15 @@ class SessionController {
         next();
       });
   }
+
+  async send_token(req, res, next) {
+    return sessionService
+      .send_token(req.body).
+      then((token) => {
+        res.customResponse = { statusCode: 200, token }
+        next()
+      })
+  }
 }
 
 module.exports = new SessionController();
