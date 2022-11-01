@@ -19,7 +19,7 @@ class LoginService {
       .then(() => { });
   }
 
-  send_token(body) {
+  sendToken(body) {
     const token = jwt.sign({ ...body }, secretKey, { expiresIn: 300 });
     return SessionRepository
       .set(body.email, token)
@@ -35,9 +35,9 @@ class LoginService {
       const { payload } = jwt.decode(token, { complete: true });
       return SessionRepository
         .validate(payload.email)
-        .then(isValid => {
-          if (isValid) {
-            return token;
+        .then(emailIsValid => {
+          if (emailIsValid) {
+            return { token, isAdmin: payload.isAdmin, id: payload.id, isSuperadmin: payload.isSuperadmin };
           } else {
             throw new Error('token is invalid');
           }
