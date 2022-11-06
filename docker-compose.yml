@@ -3,6 +3,9 @@ services:
   app:
     container_name: login_microservice
     build: "."
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - 5002:5000
     restart: always

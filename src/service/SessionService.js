@@ -13,10 +13,15 @@ class LoginService {
   }
 
   logout(token) {
-    const { payload } = jwt.decode(token, { complete: true });
-    return SessionRepository
-      .delete(payload.email)
-      .then(() => { });
+    const isValid = jwt.verify(token, secretKey);
+    if (isValid) {
+      const { payload } = jwt.decode(token, { complete: true });
+      return SessionRepository
+        .delete(payload.email)
+        .then(() => { });
+    } else {
+      throw new Error('El token no existe');
+    }
   }
 
   sendToken(body) {
@@ -39,11 +44,11 @@ class LoginService {
           if (emailIsValid) {
             return { token, isAdmin: payload.isAdmin, id: payload.id, isSuperadmin: payload.isSuperadmin };
           } else {
-            throw new Error('token is invalid');
+            throw new Error('El token no es valido');
           }
         });
     } else {
-      throw new Error('token is invalid');
+      throw new Error('El token no es valido');
     }
   }
 }
