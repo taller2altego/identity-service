@@ -4,6 +4,8 @@ const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const redis = require('redis');
 const redisClient = redis.createClient({ url: process.env.REDIS_TLS_URL || 'redis://redis:6379' });
+const morgan = require('morgan');
+const logger = require('./winston');
 var globaldata = require('./src/global');
 
 (async () => {
@@ -21,6 +23,12 @@ var globaldata = require('./src/global');
     })
   );
 
+  const myStream = {
+    write: text => {
+      logger.info(text);
+    }
+  };
+  app.use(morgan('combined', { stream: myStream }));
 
   const swaggerDefinition = {
     openapi: "3.0.0",
