@@ -54,6 +54,23 @@ class SessionController {
         next()
       })
   }
+
+  async block(req, res, next) {
+    return sessionService
+      .block(req.body.email)
+      .then(() => {
+        res.customResponse = { statusCode: 200 };
+        next();
+      })
+      .catch(err => {
+        if (err.statusCode) {
+          res.customResponse = { statusCode: err.statusCode, message: err.message };
+        } else {
+          res.customResponse = { status: 500, message: 'Unexpected error' };
+        }
+        next();
+      });
+  }
 }
 
 module.exports = new SessionController();

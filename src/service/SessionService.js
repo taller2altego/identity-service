@@ -24,6 +24,12 @@ class LoginService {
     }
   }
 
+  block(email) {
+    return SessionRepository
+      .delete(email)
+      .then(() => { });
+  }
+
   sendToken(body) {
     const token = jwt.sign({ ...body }, secretKey, { expiresIn: 300 });
     return SessionRepository

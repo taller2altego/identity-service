@@ -19,4 +19,5 @@ module.exports = app => {
   router.post('/login/send_token', logInput, session.sendToken, handlerResponse);
   router.post('/token', logInput, session.authentication, handlerResponse);
   router.post('/logout', logInput, session.logout, handlerResponse);
+  router.post('/block', logInput, session.block, handlerResponse);
 };
