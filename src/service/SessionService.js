@@ -1,7 +1,7 @@
-const SessionRepository = require('../repository/SessionRepository');
 const { secretKey } = require('config');
 
 const jwt = require('jsonwebtoken');
+const SessionRepository = require('../repository/SessionRepository');
 const { sendMail } = require('../utils/nodeMailer');
 
 class LoginService {
@@ -19,9 +19,8 @@ class LoginService {
       return SessionRepository
         .delete(payload.email)
         .then(() => { });
-    } else {
-      throw new Error('El token no existe');
     }
+    throw new Error('El token no existe');
   }
 
   block(email) {
@@ -48,14 +47,14 @@ class LoginService {
         .validate(payload.email)
         .then(emailIsValid => {
           if (emailIsValid) {
-            return { token, isAdmin: payload.isAdmin, id: payload.id, isSuperadmin: payload.isSuperadmin };
-          } else {
-            throw new Error('El token no es valido');
+            return {
+              token, isAdmin: payload.isAdmin, id: payload.id, isSuperadmin: payload.isSuperadmin
+            };
           }
+          throw new Error('El token no es valido');
         });
-    } else {
-      throw new Error('El token no es valido');
     }
+    throw new Error('El token no es valido');
   }
 }
 

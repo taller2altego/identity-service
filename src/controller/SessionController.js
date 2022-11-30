@@ -36,8 +36,8 @@ class SessionController {
 
     return sessionService
       .tokenIsValid(token)
-      .then(token => {
-        res.customResponse = { statusCode: 200, ...token };
+      .then(tokenResponse => {
+        res.customResponse = { statusCode: 200, ...tokenResponse };
         next();
       })
       .catch(err => {
@@ -49,10 +49,10 @@ class SessionController {
   async sendToken(req, res, next) {
     return sessionService
       .sendToken(req.body)
-      .then((token) => {
-        res.customResponse = { statusCode: 200, token }
-        next()
-      })
+      .then(token => {
+        res.customResponse = { statusCode: 200, token };
+        next();
+      });
   }
 
   async block(req, res, next) {
