@@ -2,7 +2,7 @@ const { secretKey } = require('config');
 
 const jwt = require('jsonwebtoken');
 const SessionRepository = require('../repository/SessionRepository');
-const { sendMail } = require('../utils/nodeMailer');
+const nodeMailer = require('../utils/nodeMailer');
 
 class LoginService {
   login(body) {
@@ -12,7 +12,7 @@ class LoginService {
       .then(() => token);
   }
 
-  logout(token) {
+  async logout(token) {
     const isValid = jwt.verify(token, secretKey);
     if (isValid) {
       const { payload } = jwt.decode(token, { complete: true });
@@ -34,7 +34,7 @@ class LoginService {
     return SessionRepository
       .set(body.email, token)
       .then(() => {
-        sendMail(body.email, token);
+        nodeMailer.sendMail(body.email, token);
         return token;
       });
   }
@@ -45,7 +45,7 @@ class LoginService {
       const { payload } = jwt.decode(token, { complete: true });
       return SessionRepository
         .validate(payload.email)
-        .then(emailIsValid => {
+        .then(async emailIsValid => {
           if (emailIsValid) {
             return {
               token, isAdmin: payload.isAdmin, id: payload.id, isSuperadmin: payload.isSuperadmin

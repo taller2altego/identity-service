@@ -24,7 +24,7 @@ class SessionController {
         if (err.statusCode) {
           res.customResponse = { statusCode: err.statusCode, message: err.message };
         } else {
-          res.customResponse = { status: 500, message: 'Unexpected error' };
+          res.customResponse = { statusCode: 500, message: 'Unexpected error' };
         }
         next();
       });
@@ -66,7 +66,7 @@ class SessionController {
         if (err.statusCode) {
           res.customResponse = { statusCode: err.statusCode, message: err.message };
         } else {
-          res.customResponse = { status: 500, message: 'Unexpected error' };
+          res.customResponse = { statusCode: 500, message: 'Unexpected error' };
         }
         next();
       });
