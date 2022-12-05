@@ -1,8 +1,9 @@
-module.exports = app => {
-  const session = require('../controller/SessionController');
-  const logger = require('../../winston');
-  const router = require('express').Router();
+const router = require('express').Router();
 
+const session = require('../controller/SessionController');
+const logger = require('../../winston');
+
+module.exports = app => {
   const handlerResponse = (req, res) => {
     const { statusCode, ...otherFields } = res.customResponse;
     res.status(statusCode).send(otherFields);
@@ -19,4 +20,5 @@ module.exports = app => {
   router.post('/login/send_token', logInput, session.sendToken, handlerResponse);
   router.post('/token', logInput, session.authentication, handlerResponse);
   router.post('/logout', logInput, session.logout, handlerResponse);
+  router.post('/block', logInput, session.block, handlerResponse);
 };

@@ -1,7 +1,6 @@
-const redisClient = require('./../global').redisClient;
+const { redisClient } = require('../global');
 
 class SessionRepository {
-
   async validate(email) {
     const isValid = await redisClient.get(email);
     return isValid !== null;
