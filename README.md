@@ -1,6 +1,21 @@
 # User Microservice Fiuber
 [![codecov](https://codecov.io/github/taller2altego/identity-service/branch/main/graph/badge.svg?token=D7FDPQ58NM)](https://codecov.io/github/taller2altego/identity-service)
 
+### Construido con:
+
+[![Node][Node.js]][Node-url]
+[![Express][Express.js]][Express-url]
+[![Redis][Redis]][Redis-url]
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[Node.js]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
+[Node-url]: https://nodejs.org/en/
+[Express.js]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
+[Express-url]: https://expressjs.com/es/
+[Redis]: https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white
+[Redis-url]: https://redis.io/
+
 ## Dependencias
 
 Utilizamos [npm](https://www.npmjs.com/) como gestor de paquetes, y [Docker](https://www.docker.com/) para el despliegue local.
