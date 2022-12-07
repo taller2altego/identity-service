@@ -29,6 +29,7 @@
     "start": "node server.js",
     "test": "./node_modules/.bin/mocha ./test/**/*.unit.test.js --ignore winston.js",
     "coverage": "nyc npm run test",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov",
     "docker-start": "nodemon -L --inspect=0.0.0.0 server.js",
     "docker-up": "docker-compose up --build -d",
     "prepare": "husky install",
