@@ -1,4 +1,4 @@
-# User Microservice Fiuber
+# Identity Microservice Fiuber
 [![codecov](https://codecov.io/github/taller2altego/identity-service/branch/main/graph/badge.svg?token=D7FDPQ58NM)](https://codecov.io/github/taller2altego/identity-service)
 
 ### Construido con:
@@ -28,7 +28,7 @@ Clonar el repositorio e instalar paquetes:
     $ git clone git@github.com:taller2altego/identity-service.git
     $ npm install
 
-Levantar el API Gateway con Docker local:
+Levantar el servicio con Docker local:
 
     $ npm run docker-up
 
