@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
   requireTLS: true,
   auth: {
     user: 'news.altego@gmail.com',
-    pass: 'ebwoehnepqfptpqk'
+    pass: 'kpoyclztzncdvslr'
   }
 });
 
